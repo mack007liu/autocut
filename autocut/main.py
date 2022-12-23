@@ -91,9 +91,9 @@ def main():
     args = parser.parse_args()
 
     if args.transcribe:
-        import transcribe
+        from .transcribe import Transcribe
 
-        transcribe(args).run()
+        Transcribe(args).run()
     elif args.to_md:
         from .utils import trans_srt_to_md
 
