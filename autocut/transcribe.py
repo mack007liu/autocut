@@ -11,7 +11,7 @@ import whisper
 
 from tqdm import tqdm
 
-from . import utils
+import utils
 
 
 def process(whisper_model, audio, seg, lang, prompt):

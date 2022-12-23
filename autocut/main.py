@@ -2,7 +2,7 @@ import argparse
 import logging
 import os
 
-from . import utils
+import utils
 
 
 def main():
@@ -91,9 +91,9 @@ def main():
     args = parser.parse_args()
 
     if args.transcribe:
-        from .transcribe import Transcribe
+        import transcribe
 
-        Transcribe(args).run()
+        transcribe(args).run()
     elif args.to_md:
         from .utils import trans_srt_to_md
 
@@ -110,7 +110,7 @@ def main():
                 "Wrong number of files, please pass in a .srt file or an additional video file"
             )
     elif args.cut:
-        from .cut import Cutter
+        from cut import Cutter
 
         Cutter(args).run()
     elif args.daemon:

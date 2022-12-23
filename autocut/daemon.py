@@ -4,7 +4,7 @@ import logging
 import os
 import time
 
-from . import cut, transcribe, utils
+import cut, transcribe, utils
 
 
 class Daemon:

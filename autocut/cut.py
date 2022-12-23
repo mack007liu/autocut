@@ -5,7 +5,7 @@ import re
 import srt
 from moviepy import editor
 
-from . import utils
+import utils
 
 
 # Merge videos
