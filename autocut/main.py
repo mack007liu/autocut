@@ -91,7 +91,7 @@ def main():
     args = parser.parse_args()
 
     if args.transcribe:
-        from .transcribe import Transcribe
+        from transcribe import Transcribe
 
         Transcribe(args).run()
     elif args.to_md:

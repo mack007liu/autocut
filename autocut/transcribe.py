@@ -13,6 +13,13 @@ from tqdm import tqdm
 
 import utils
 
+# from transformers import AutoProcessor, AutoModelForSpeechSeq2Seq
+# from datasets import load_dataset
+#
+# processor = AutoProcessor.from_pretrained("F:\\opensource\\whisper-small\\")
+#
+# model = AutoModelForSpeechSeq2Seq.from_pretrained("F:\\opensource\\whisper-small\\")
+
 
 def process(whisper_model, audio, seg, lang, prompt):
     r = whisper_model.transcribe(
@@ -41,6 +48,8 @@ class Transcribe:
                 continue
 
             audio = whisper.load_audio(input, sr=self.sampling_rate)
+            # ds = load_dataset("common_voice", data_files=input)
+            # audio = ds.cast_column(input, datasets.Audio(sampling_rate=16_000))
             if (
                 self.args.vad == "1"
                 or self.args.vad == "auto"
@@ -64,10 +73,13 @@ class Transcribe:
             # torch load limit https://github.com/pytorch/vision/issues/4156
             torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
             self.vad_model, funcs = torch.hub.load(
-                repo_or_dir=os.path.join(os.path.dirname(sys.executable), "snakers4_silero-vad_master"), 
+                repo_or_dir=os.path.join(os.path.dirname(sys.executable), "snakers4_silero-vad_master"),
                 source="local",
-                model="silero_vad", 
+                model="silero_vad",
                 trust_repo=True
+                # repo_or_dir='snakers4/silero-vad',
+                # model='silero_vad',
+                # force_reload=True
             )
 
             self.detect_speech = funcs[0]
@@ -96,6 +108,7 @@ class Transcribe:
             self.whisper_model = whisper.load_model(
                 self.args.whisper_model, self.args.device
             )
+            # self.whisper_model = model
 
         res = []
         if self.args.device == "cpu" and len(speech_timestamps) > 1:
