@@ -156,7 +156,7 @@ class Cutter:
             logging.info(
                 f"Reduced duration from {media.duration:.1f} to {final_clip.duration:.1f}"
             )
-
+            #声音有大有小，处理后声音可以保持一致
             final_clip = final_clip.fx(editor.afx.audio_normalize)
             final_clip.write_audiofile(
                 output_fn, codec="libmp3lame", fps=44100, bitrate=self.args.bitrate

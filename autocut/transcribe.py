@@ -44,6 +44,7 @@ class Transcribe:
         for input in self.args.inputs:
             logging.info(f"Transcribing {input}")
             name, _ = os.path.splitext(input)
+            # 先检查转录字幕是否已存在，存在的话跳过转录
             if utils.check_exists(name + ".md", self.args.force):
                 continue
 
@@ -72,6 +73,7 @@ class Transcribe:
         if self.vad_model is None or self.detect_speech is None:
             # torch load limit https://github.com/pytorch/vision/issues/4156
             torch.hub._validate_not_a_forked_repo = lambda a, b, c: True
+            # 通过模型--从完整的音频文件中获取语音时间戳（说话的片段）,要先下载对应模型到本地环境
             self.vad_model, funcs = torch.hub.load(
                 repo_or_dir=os.path.join(os.path.dirname(sys.executable), "snakers4_silero-vad_master"),
                 source="local",
